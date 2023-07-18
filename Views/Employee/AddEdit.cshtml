@@ -1,0 +1,240 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model Lib.Models.EmployeeMas
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Add" : "Edit";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@(Model.Id == 0 ? "Add" : "Edit") Employee</h1>
+<hr />
+
+<div>
+    <div class="modal-content">
+        <div class="modal-body">
+            <form asp-action="AddEdit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    @if (Model.Id != 0)
+                    {
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label asp-for="Id" class="col-form-label"></label>
+                                <input asp-for="Id" class="form-control" readonly />
+                                <span asp-validation-for="Id" class="text-danger"></span>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.Id != 0)
+                    {
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label asp-for="CreatedBy" class="col-form-label"></label>
+                                <input asp-for="CreatedBy" class="form-control" readonly />
+                                <span asp-validation-for="CreatedBy" class="text-danger"></span>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="EmpId" class="col-form-label"></label>
+                            <input asp-for="EmpId" class="form-control" />
+                            <span asp-validation-for="EmpId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Name" class="col-form-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                       <div class="form-group">
+        <label for="DesignationId">Designation</label>
+                            @Html.DropDownListFor(model => model.DesignationId, (SelectList)ViewBag.Designations, "-- Select Designation --", new { @class = "form-control" })
+    </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Gender" class="col-form-label">Gender</label>
+                            <select asp-for="Gender" class="form-control">
+                                <option value="">-- Select Gender --</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                                <option value="3">Others</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="BirthDate" class="col-form-label"></label>
+                            <input asp-for="BirthDate" class="form-control"  />
+                            <span asp-validation-for="BirthDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Address" class="col-form-label"></label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Phone" class="col-form-label"></label>
+                            <input asp-for="Phone" class="form-control" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Email" class="col-form-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Password" class="col-form-label"></label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="HireDate" class="col-form-label"></label>
+                            <input asp-for="HireDate" class="form-control" />
+                            <span asp-validation-for="HireDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <hr style="border-top: 1px solid black;">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="LeaveDate" class="col-form-label"></label>
+                            <input asp-for="LeaveDate" class="form-control"  />
+                            <span asp-validation-for="LeaveDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="BankName" class="col-form-label"></label>
+                            <input asp-for="BankName" class="form-control" />
+                            <span asp-validation-for="BankName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="BankBranch" class="col-form-label"></label>
+                            <input asp-for="BankBranch" class="form-control" />
+                            <span asp-validation-for="BankBranch" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="BankAcNo" class="col-form-label"></label>
+                            <input asp-for="BankAcNo" class="form-control" />
+                            <span asp-validation-for="BankAcNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="IFSCCode" class="col-form-label"></label>
+                            <input asp-for="IFSCCode" class="form-control" />
+                            <span asp-validation-for="IFSCCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="PAN" class="col-form-label"></label>
+                            <input asp-for="PAN" class="form-control" />
+                            <span asp-validation-for="PAN" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <hr style="border-top: 1px solid black;">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Role" class="col-form-label">Role</label>
+                            <select asp-for="Role" class="form-control">
+                                <option value="">-- Select Role --</option>
+                                <option value="1">HR</option>
+                                <option value="2">Employee</option>
+                                
+                            </select>
+                            <span asp-validation-for="Role" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="IsActive" class="col-form-label">Status <span class="text-danger">*</span></label>
+                            <div class="status-toggle">
+                                <input asp-for="IsActive" id="staff_module" class="check" type="checkbox" />
+                                <label class="checktoggle" for="staff_module"></label>
+                            </div>
+                            <span asp-validation-for="IsActive" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.Id != 0)
+                {
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label asp-for="ModifiedBy" class="col-form-label"></label>
+                                <input asp-for="ModifiedBy" class="form-control" readonly />
+                                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="submit-section">
+                    @if (Model.Id == 0)
+                    {
+                        <input type="submit" value="Add" class="btn btn-primary" />
+                    }
+                    else
+                    {
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    }
+                    <a href="/Employee/Employees" class="btn btn-primary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

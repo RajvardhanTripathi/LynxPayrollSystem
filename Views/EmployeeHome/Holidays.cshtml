@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Lib.Models.HolidayMas>
+
+@{
+    ViewData["Title"] = "Holidays";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+@section styles{
+    <style>
+        .continue-btn,
+        .cancel-btn {
+            width: 100%;
+        }
+    </style>
+}
+
+<!--Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Holidays</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/EmployeeHome/Holidays">Dashboard</a></li>
+                <li class="breadcrumb-item active">Holidays</li>
+            </ul>
+        </div>
+        
+    </div>
+</div>
+<!-- /Page Header -->
+
+<form method="post" asp-controller="EmployeeHome" asp-action="Holidays">
+    <div class="row filter-row">
+        <div class="col-sm-6 col-md-3">
+            <div class="form-group form-focus">
+                <label class="focus-label" for="searchInput">Holiday Name</label>
+                <input class="form-control floating" type="text" id="searchInput" name="searchTerm" placeholder="Enter holiday name" />
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <button type="submit" class="btn btn-success btn-block">Search</button>
+        </div>
+    </div>
+</form>
+
+@if (Model.Any())
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <table class="table table-striped custom-table mb-0 datatable">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;">#</th>
+                            <th>Holiday Name</th>
+                            <th>Date</th>
+                            <th>Day</th>
+                            
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var (item, index) in Model.OrderByDescending(x => x.Id).Select((value, i) => (value, i)))
+                        {
+                            <tr>
+                                <td>@(Model.Count() - index)</td>
+                                <td>@item.Name</td>
+                                <td>@item.Date.ToString("dd-MM-yyyy")</td>
+                                <td>@item.Day</td>
+                                
+                              
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p>No results found.</p>
+}

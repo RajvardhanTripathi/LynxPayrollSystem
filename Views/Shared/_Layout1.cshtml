@@ -1,0 +1,227 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<meta name="description" content="Smarthr - Bootstrap Admin Template">
+	<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+	<meta name="author" content="Dreamguys - Bootstrap Admin Template">
+	<meta name="robots" content="noindex, nofollow">
+	<title>LYNX - Payroll Management System</title>
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="../..image/x-icon" href="~/assets/img/favicon.ico">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+
+	<!-- Fontawesome CSS -->
+	<link rel="stylesheet" href="~/assets/css/font-awesome.min.css">
+
+	<!-- Lineawesome CSS -->
+	<link rel="stylesheet" href="~/assets/css/line-awesome.min.css">
+
+	<!-- Chart CSS -->
+	<link rel="stylesheet" href="~/assets/plugins/morris/morris.css">
+
+	<!-- Select2 CSS -->
+	<link rel="stylesheet" href="~/assets/css/select2.min.css">
+
+	<!-- Datetimepicker CSS -->
+	<link rel="stylesheet" href="~/assets/css/bootstrap-datetimepicker.min.css">
+	<!-- Datatable CSS -->
+	<link rel="stylesheet" href="~/assets/css/dataTables.bootstrap4.min.css">
+
+	<!-- Calendar CSS -->
+	<link rel="stylesheet" href="~/assets/css/fullcalendar.min.css">
+
+	<!-- Main CSS -->
+	<link rel="stylesheet" href="~/assets/css/style.css">
+	@await RenderSectionAsync("styles", required: false)
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+		<script src="assets/js/html5shiv.min.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+	<!-- Main Wrapper -->
+	<div class="main-wrapper">
+
+		<!-- Header -->
+		<div class="header">
+
+			<!-- Logo -->
+			<div class="header-left">
+				<a href="/EmployeeHome/Index" class="logo">
+					<img src="~/assets/img/Lynxlogo3.png" width="40" height="40" alt="">
+				</a>
+			</div>
+			<!-- /Logo -->
+
+			<a id="toggle_btn" href="javascript:void(0);">
+				<span class="bar-icon">
+					<span></span>
+					<span></span>
+					<span></span>
+				</span>
+			</a>
+
+			<!-- Header Title -->
+			<div class="page-title-box">
+				<h3>Lynx Payroll System</h3>
+			</div>
+			<!-- /Header Title -->
+
+			<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
+
+			<!-- Header Menu -->
+			<ul class="nav user-menu">
+
+				<!-- Search -->
+				<li class="nav-item">
+					<div class="top-nav-search">
+						<a href="javascript:void(0);" class="responsive-search">
+							<i class="fa fa-search"></i>
+						</a>
+						<form action="search.html">
+							<input type="text" id="searchTerm" class="form-control" placeholder="Search here">
+							<button onclick="searchText()" class="btn"><i class="fa fa-search"></i></button>
+						</form>
+					</div>
+				</li>
+				<!-- /Search -->
+
+
+
+
+
+
+
+				<li><a class="dropdown-item" href="@Url.Action("Logout", "Login")">Logout</a></li>
+				</ul>
+		</div>
+		<!-- /Header -->
+		<!-- Sidebar -->
+		<div class="sidebar" id="sidebar">
+			<div class="sidebar-inner slimscroll">
+				<div id="sidebar-menu" class="sidebar-menu">
+					<ul>
+						<li class="menu-title">
+							<span>Main</span>
+						</li>
+						<li>
+							<a href="/EmployeeHome/Index"><i class="la la-dashboard"></i> <span> Dashboard</span> </a>
+
+						</li>
+
+
+						<li class="submenu">
+							<a href="#"><i class="la la-user"></i> <span>Employee</span> <span class="menu-arrow"></span></a>
+							<ul style="display: none;">
+
+								<li><a href="/EmployeeHome/Holidays">Holidays </a></li>
+								<li><a href="/EmployeeHome/Leaves">Leave </a></li>
+								<li><a href="/EmployeeHome/Attendances">Attendences</a></li>
+
+							</ul>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- /Sidebar -->
+
+		<script>
+			var previousMatches = [];
+
+			function searchText() {
+				var searchTerm = document.getElementById("searchTerm").value.toLowerCase(); // Get the search term from an input field with the id "searchTerm"
+				var bodyText = document.body.innerHTML; // Get the inner HTML of the <body> element
+				var allMatches = bodyText.match(new RegExp(searchTerm, 'gi')); // Find all matches of the search term
+
+				if (previousMatches.length > 0) {
+					removeHighlight(); // Clear previous highlight
+					previousMatches = [];
+				}
+
+				if (allMatches && allMatches.length > 0) {
+					for (var i = 0; i < allMatches.length; i++) {
+						var match = allMatches[i].toLowerCase();
+						if (!previousMatches.includes(match)) {
+							previousMatches.push(match);
+							highlightText(match); // Highlight the current match
+						}
+					}
+				}
+			}
+
+			function highlightText(text) {
+				var bodyText = document.body.innerHTML;
+				var regex = new RegExp('(' + text + ')', 'gi');
+				var highlightedText = bodyText.replace(regex, '<span style="color: red;">$1</span>'); // Replace the search term with the highlighted version
+				document.body.innerHTML = highlightedText; // Update the inner HTML of the <body> element with the highlighted text
+			}
+
+			function removeHighlight() {
+				var elements = document.getElementsByTagName("span");
+				while (elements.length > 0) {
+					var parent = elements[0].parentNode;
+					parent.replaceChild(document.createTextNode(elements[0].innerText), elements[0]); // Replace the span element with a text node containing the matched text
+				}
+			}
+		</script>
+		<!-- Page Wrapper -->
+		<div class="page-wrapper">
+
+			<!-- Page Content -->
+			<div class="content container-fluid">
+				<div>
+
+					@RenderBody()
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Main Wrapper -->
+	<!-- jQuery -->
+	<script src="~/assets/js/jquery-3.2.1.min.js"></script>
+
+	<!-- Bootstrap Core JS -->
+	<script src="~/assets/js/popper.min.js"></script>
+	<script src="~/assets/js/bootstrap.min.js"></script>
+
+	<!-- Slimscroll JS -->
+	<script src="~/assets/js/jquery.slimscroll.min.js"></script>
+
+	<!-- Chart JS -->
+	<script src="~/assets/plugins/morris/morris.min.js"></script>
+	<script src="~/assets/plugins/raphael/raphael.min.js"></script>
+	<script src="~/assets/js/chart.js"></script>
+
+	<!-- Select2 JS -->
+	<script src="~/assets/js/select2.min.js"></script>
+
+	<!-- Datetimepicker JS -->
+	<script src="~/assets/js/moment.min.js"></script>
+	<script src="~/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+	<!-- Calendar JS -->
+	<script src="~/assets/js/jquery-ui.min.js"></script>
+	<script src="~/assets/js/fullcalendar.min.js"></script>
+	<script src="~/assets/js/jquery.fullcalendar.js"></script>
+
+	<!-- Datatable JS -->
+	<script src="~/assets/js/jquery.dataTables.min.js"></script>
+	<script src="~/assets/js/dataTables.bootstrap4.min.js"></script>
+
+	<!-- Custom JS -->
+	<script src="~/assets/js/app.js"></script>
+
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

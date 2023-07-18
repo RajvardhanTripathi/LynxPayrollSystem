@@ -1,0 +1,75 @@
+﻿@model List<Attendance>
+@using Lib.Models
+
+@{
+    ViewData["Title"] = "Attendance Management";
+}
+
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Attendance</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/Attendance/Index">Dashboard</a></li>
+                <li class="breadcrumb-item active">Attendance</li>
+            </ul>
+        </div>
+        
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger">@ViewBag.Message</div>
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="file">Upload Excel File:</label>
+        <input type="file" id="file" name="file" class="form-control-file" />
+    </div>
+    <button type="submit" class="btn btn-primary">Import</button>
+</form>
+
+<hr />
+
+@if (Model != null && Model.Count > 0)
+{
+      <div class="row">
+        <div class="col-md-12">
+    <table class="table table-striped custom-table mb-0 datatable">
+        <thead>
+            <tr>
+                
+                <th>User ID</th>
+                <th>Attendance Date</th>
+                <th>In/Out Flag</th>
+                <th>Remark</th>
+                <th>Created Date</th>
+                <th>Modified Date</th>
+                <th>Device ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var attendance in Model)
+            {
+                <tr>
+                    
+                    <td>@attendance.UserId</td>
+                    <td>@attendance.AttDate.ToShortDateString()</td>
+                    <td>@(attendance.InOutFlag ? "In" : "Out")</td>
+                    <td>@attendance.Remark</td>
+                    <td>@attendance.CreatedDate.ToShortDateString()</td>
+                    <td>@(attendance.ModifiedDate.HasValue ? attendance.ModifiedDate.Value.ToShortDateString() : "")</td>
+                    <td>@attendance.DeviceId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+    </div>
+}
+else
+{
+    <p>No attendance records found.</p>
+}

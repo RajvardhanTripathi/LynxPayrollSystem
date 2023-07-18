@@ -1,0 +1,132 @@
+﻿@model IEnumerable<Lib.Models.SalaryAssign>
+
+@{
+    ViewData["Title"] = "Salary Assignments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <style>
+        body {
+            overflow-y: scroll; /* Show vertical scrollbar */
+            overflow-x: scroll; /* Show horizontal scrollbar */
+        }
+    </style>
+    <style>
+        .continue-btn,
+        .cancel-btn {
+            width: 100%;
+        }
+    </style>
+}
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">Salary Assignments</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/SalaryAssign/Index">Dashboard</a></li>
+                <li class="breadcrumb-item active">Salary Assignments</li>
+            </ul>
+        </div>
+        <div class="col-auto float-right ml-auto">
+            <a href="/SalaryAssign/AssignEdit" class="btn add-btn"><i class="fa fa-plus"></i> Add Salary Assignment</a>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<form method="post" asp-controller="SalaryAssign" asp-action="Index">
+    <div class="row filter-row">
+        <div class="col-sm-6 col-md-3">
+            <div class="form-group form-focus">
+                <label class="focus-label" for="searchInput">Employee Name</label>
+                <input class="form-control floating" type="text" id="searchInput" name="searchTerm" placeholder="Enter employee name" />
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <button type="submit" class="btn btn-success btn-block">Search</button>
+        </div>
+    </div>
+</form>
+
+@if (Model.Any())
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <table class="table table-striped custom-table mb-0 datatable">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;">#</th>
+                            <th>Employee</th>
+                            <th>SalaryAddons</th>
+                            <th>Is Percentage</th>
+                            <th>Value</th>
+                          
+                            <th class="text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var (item, index) in Model.Select((value, i) => (value, i)))
+                        {
+                            <tr>
+                                <td>@(index + 1)</td>
+                                <td>@item.EmployeeName</td>
+                                <td>@(string.IsNullOrEmpty(item.SalaryAddonName) ? "--" : item.SalaryAddonName)</td>
+                          
+
+                                
+                                <td>@(item.IsPercentage ? "%" : "₹")</td>
+                                <td>@item.Value</td>
+                                
+                                <td class="text-right" style="font-size: 20px;">
+                                    <form asp-controller="SalaryAssign" asp-action="AssignEdit" method="get" style="display:inline">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button type="submit" class="btn btn-link">
+                                            <i style="color: #00C5FB;" class="fa fa-pencil m-r-5"></i>
+                                        </button>
+                                    </form>
+                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteSalaryAssignmentConfirmation_@item.Id">
+                                        <i style="color: #00C5FB;" class="fa fa-trash-o m-r-5"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <div class="modal custom-modal fade" id="deleteSalaryAssignmentConfirmation_@item.Id" role="dialog">
+                                <div class="modal-dialog modal-dialog-centered  ">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="form-header">
+                                                <h3>Delete Salary Assignment</h3>
+                                                <p>Are you sure you want to delete this salary assignment?</p>
+                                            </div>
+                                            <div class="modal-btn delete-action">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <form asp-controller="SalaryAssign" asp-action="Delete" method="post">
+                                                            <input type="hidden" name="id" value="@item.Id" />
+                                                            <button type="submit" class="btn btn-primary continue-btn">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <button type="button" class="btn btn-primary cancel-btn" data-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p>No results found.</p>
+}

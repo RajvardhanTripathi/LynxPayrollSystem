@@ -1,0 +1,91 @@
+﻿@model Lib.Models.SalaryAssign
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Assign" : "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@(Model.Id == 0 ? "Assign" : "Edit") Salary Assign</h1>
+<hr />
+
+<div>
+    <div class="modal-content">
+        <div class="modal-body">
+            <form asp-action="AssignEdit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    @if (Model.Id != 0)
+                    {
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label asp-for="Id" class="col-form-label"></label>
+                                <input asp-for="Id" class="form-control" readonly />
+                                <span asp-validation-for="Id" class="text-danger"></span>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="EmployeeId" class="col-form-label">Employee</label>
+                            <select asp-for="EmployeeId" class="form-control">
+                                <option value="">-- Select Employee --</option>
+                                @foreach (var employee in ViewBag.Employees)
+                                {
+                                    <option value="@employee.Id">@employee.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="SalaryAddonId" class="col-form-label">Salary Addon</label>
+                            <select asp-for="SalaryAddonId" class="form-control">
+                                <option value="">-- Select Salary Addon --</option>
+                                @foreach (var salaryAddon in ViewBag.SalaryAddons)
+                                {
+                                    <option value="@salaryAddon.Id">@salaryAddon.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="SalaryAddonId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Value" class="col-form-label">Value</label>
+                            <input asp-for="Value" class="form-control" />
+                            <span asp-validation-for="Value" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="IsPercentage" class="col-form-label">Is Percentage</label>
+                            <div class="status-toggle">
+                                <input asp-for="IsPercentage" id="ispercentage" class="check" type="checkbox" />
+                                <label class="checktoggle" for="ispercentage"></label>
+                            </div>
+                            <span asp-validation-for="IsPercentage" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="submit-section">
+                    @if (Model.Id == 0)
+                    {
+                        <input type="submit" value="Assign" class="btn btn-primary" />
+                    }
+                    else
+                    {
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    }
+                    <a href="/SalaryAssign/SalaryAssignments" class="btn btn-primary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

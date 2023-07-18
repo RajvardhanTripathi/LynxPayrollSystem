@@ -1,0 +1,124 @@
+﻿@model Lib.Models.HolidayMas
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Add" : "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@(Model.Id == 0 ? "Add" : "Edit") Holiday</h1>
+<hr />
+
+<div>
+    <div class="modal-content">
+        <div class="modal-body">
+            <form asp-action="AddEdit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    @if (Model.Id != 0)
+                    {
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label asp-for="Id" class="col-form-label"></label>
+                                <input asp-for="Id" class="form-control" readonly />
+                                <span asp-validation-for="Id" class="text-danger"></span>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.Id != 0)
+                    {
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label asp-for="CreatedBy" class="col-form-label"></label>
+                                <input asp-for="CreatedBy" class="form-control" readonly />
+                                <span asp-validation-for="CreatedBy" class="text-danger"></span>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Name" class="col-form-label">Name</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+              
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label asp-for="Date">Select a date:</label>
+                            <input class="form-control" asp-for="Date" type="date" id="dateInput" value="@Model.Date.ToShortDateString()" />
+                            <span asp-validation-for="Day" class="text-danger"></span>
+                        </div>
+                    </div>
+                
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Day<span class="text-danger"></span></label>
+                            <input class="form-control" asp-for="Day" id="weekdayInput" readonly />
+                            <span asp-validation-for="Day" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="IsActive" class="col-form-label">Status <span class="text-danger">*</span></label>
+                    <div class="status-toggle">
+                        <input asp-for="IsActive" id="staff_module" class="check" type="checkbox" />
+                        <label class="checktoggle" for="staff_module"></label>
+                    </div>
+                    <span asp-validation-for="IsActive" class="text-danger"></span>
+                </div>
+                </div>
+
+                </div>
+
+                @if (Model.Id != 0)
+                {
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label asp-for="ModifiedBy" class="col-form-label"></label>
+                                <input asp-for="ModifiedBy" class="form-control" readonly />
+                                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="submit-section">
+                    @if (Model.Id == 0)
+                    {
+                        <input type="submit" value="Add" class="btn btn-primary" />
+                    }
+                    else
+                    {
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    }
+                    <a href="/Holiday/Holidays" class="btn btn-primary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("dateInput").addEventListener("input", updateWeekday);
+
+        function updateWeekday() {
+            var dateInput = document.getElementById("dateInput").value;
+            var dateObject = new Date(dateInput);
+            var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            var weekday = weekdays[dateObject.getDay()];
+
+            document.getElementById("weekdayInput").value = weekday;
+        }
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
